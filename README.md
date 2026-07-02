@@ -21,7 +21,7 @@ SudoGNN operates applying gradient descent directly to a composite loss function
 The total loss is minimized when the network settles into a stable, valid coloring configuration (a zero-energy ground state).
 
 ### 1. The Physics-Inspired Constraint Loss (Adjacency Penalty)
-Each node $i$ outputs a softmax probability vector $\mathbf{p}_i \in [0, 1]^C$, where $C$ is the number of available colors (e.g., 9 for Sudoku) and $\sum_c p_{ic} = 1$.
+Each node $i$ outputs a softmax probability vector $\mathbf{p}_i \in [0, 1]^C$ (in this way the problem is differentiable!), where $C$ is the number of available colors (e.g., 9 for Sudoku) and $\sum_c p_{ic} = 1$.
 
 To enforce that adjacent nodes do not share the same color, we compute a **dot-product friction/repulsion penalty** across all connected edges $(i, j) \in E$:
 
@@ -53,14 +53,3 @@ Solving the Sudoku is simply the emergent result of the GNN successfully minimiz
 
 ---
 
-## 🛠️ Foundations & Tech Stack
-
-The project builds upon foundational graph coloring algorithms initialized in `GNN.ipynb` (originally by *Alessandro Calderoni*) and scales them toward complex constraint matrices using:
-- **PyTorch** & **PyTorch Geometric (PyG)** for graph convolutions (`SAGEConv`).
-- **NetworkX** & **Matplotlib** for parsing and visualizing DIMACS standard (`.col`) graphs.
-
----
-
-## 🚀 Status
-
-This repository is under active development. We are currently benchmarking the unsupervised physics loss on standard complex graphs and fine-tuning the balance between the adjacency penalty and entropy minimization to guarantee convergence without traditional backtracking.
